@@ -1,0 +1,19 @@
+[project]
+name = "TaskFlow-api"
+version = "0.1.0"
+description = "TaskFlow API"
+readme = "README.md"
+requires-python = ">=3.14"
+authors = [
+    { name = "Георгий Лозовой", email = "georgelozovoi@gmail.com" }
+]
+
+dependencies = [
+        "fastapi==0.143.0",
+        "uvicorn==0.54.0",
+        ]
+
+[dependency-groups]
+dev = [
+    "ruff==0.17.1",
+]
