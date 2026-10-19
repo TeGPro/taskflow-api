@@ -1,7 +1,8 @@
 from fastapi import FastAPI
+from app.api.playground import router
 
 app = FastAPI()
-# app.include_router(router)
+app.include_router(router)
 
 
 @app.get("/health")

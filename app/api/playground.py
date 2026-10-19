@@ -2,8 +2,14 @@
 from typing import Literal
 from uuid import UUID, uuid4
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
+from sqlalchemy.orm import Session
+
+from app.api.deps import get_db
+from app.models.project import Project
+from app.models.task import Task
+from app.models.user import User
 
 router = APIRouter(prefix="/playground")
 
@@ -51,3 +57,13 @@ async def tasks_list(status: Literal["todo", "in_progress", "done"] | None = Non
             filtered_tasks.append(task)
 
     return filtered_tasks
+
+
+@router.get("/projects/{project_id}")
+def projects_get(project_id: UUID, db: Session = Depends(get_db)):
+    project = db.get(Project, project_id)
+
+    if project is None:
+        raise HTTPException(status_code=404, detail="Project not found")
+
+    return {"id": project.id, "name": project.name}
