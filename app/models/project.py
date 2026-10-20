@@ -13,7 +13,9 @@ class Project(Base):
     __tablename__ = "projects"
 
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
-    owner_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"), nullable=False)
+    owner_id: Mapped[UUID] = mapped_column(
+        ForeignKey("users.id"), nullable=False, index=True
+    )
     name: Mapped[str] = mapped_column(String(120), nullable=False)
     description: Mapped[str | None] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(
@@ -23,3 +25,4 @@ class Project(Base):
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )
     tasks: Mapped[list["Task"]] = relationship("Task")
+    archived_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

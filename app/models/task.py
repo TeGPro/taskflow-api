@@ -10,7 +10,7 @@ class Task(Base):
 
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
     project_id: Mapped[UUID] = mapped_column(
-        ForeignKey("projects.id", ondelete="CASCADE"), nullable=False
+        ForeignKey("projects.id", ondelete="CASCADE"), nullable=False, index=True
     )
     created_by: Mapped[UUID] = mapped_column(ForeignKey("users.id"), nullable=False)
     assignee_id: Mapped[UUID | None] = mapped_column(ForeignKey("users.id"))
