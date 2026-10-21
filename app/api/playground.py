@@ -8,8 +8,6 @@ from sqlalchemy.orm import Session
 
 from app.api.deps import get_db
 from app.models.project import Project
-from app.models.task import Task
-from app.models.user import User
 
 router = APIRouter(prefix="/playground")
 

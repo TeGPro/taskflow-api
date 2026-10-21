@@ -24,5 +24,7 @@ class Project(Base):
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )
-    tasks: Mapped[list["Task"]] = relationship("Task")
+    tasks: Mapped[list["Task"]] = relationship(
+        "Task", passive_deletes=True, cascade="save-update, merge, delete"
+    )
     archived_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
