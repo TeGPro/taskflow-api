@@ -7,6 +7,15 @@ class ProjectCreate(BaseModel):
     name: str = Field(min_length=1, max_length=120)
     description: str | None = Field(max_length=2000, default=None)
 
+    @field_validator("name", mode="before")
+    def check_name(cls, value: str | None) -> str:
+        if value is None:
+            raise ValueError("Имя не может быть None")
+        if not isinstance(value, str):
+            raise ValueError("Имя должно быть строкой")
+
+        return value.strip()
+
 
 class ProjectRead(BaseModel):
     id: UUID
@@ -23,8 +32,11 @@ class ProjectUpdate(BaseModel):
     name: str | None = Field(min_length=1, max_length=120, default=None)
     description: str | None = Field(max_length=2000, default=None)
 
-    @field_validator("name")
+    @field_validator("name", mode="before")
     def check_name(cls, value: str | None) -> str:
         if value is None:
             raise ValueError("Имя не может быть None")
-        return value
+        if not isinstance(value, str):
+            raise ValueError("Имя должно быть строкой")
+
+        return value.strip()
