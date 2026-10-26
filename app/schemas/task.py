@@ -63,3 +63,10 @@ class TaskUpdate(BaseModel):
             raise ValueError("Статус или приоритет должны быть строкой")
 
         return value
+
+
+class PaginatedTasksResponse(BaseModel):
+    items: list[TaskRead]
+    total: int
+    offset: int
+    limit: int
