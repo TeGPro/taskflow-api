@@ -1,8 +1,9 @@
+from sqlalchemy.exc import SQLAlchemyError
+
 from app.db.session import SessionLocal
 from app.models.user import User
 from app.schemas.project import ProjectCreate
 from app.services.projects import create_project
-from sqlalchemy.exc import SQLAlchemyError
 
 with SessionLocal() as db:
     user = User(

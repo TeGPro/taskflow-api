@@ -1,3 +1,10 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app", "app.*"]
+
 [project]
 name = "TaskFlow-api"
 version = "0.1.0"
@@ -5,18 +12,28 @@ description = "TaskFlow API"
 readme = "README.md"
 requires-python = ">=3.14"
 authors = [
-    { name = "Георгий Лозовой", email = "georgelozovoi@gmail.com" }
+    { name = "Георгий Лозовой", email = "georgelozovoi@gmail.com" },
 ]
 
 dependencies = [
-        "fastapi==0.143.0",
-        "uvicorn==0.54.0",
-        "pydantic-settings",
-        "alembic",
-        "psycopg[binary]"
-        ]
+    "fastapi==0.143.0",
+    "uvicorn==0.54.0",
+    "pydantic-settings==2.16.1",
+    "pydantic[email]==2.14.1",
+    "SQLAlchemy==2.1.6",
+    "alembic==1.20.1",
+    "psycopg[binary]==3.3.6",
+    "pwdlib[argon2]==0.3.1",
+    "PyJWT==2.15.1",
+]
 
 [dependency-groups]
 dev = [
     "ruff==0.17.1",
 ]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Query"]
+
+[tool.ruff.lint.per-file-ignores]
+"app/schemas/*.py" = ["TRY004"]

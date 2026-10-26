@@ -1,8 +1,10 @@
 from datetime import datetime
 from uuid import UUID, uuid4
-from sqlalchemy import ForeignKey, String, Text, DateTime, func, CheckConstraint
-from app.db.base import Base
+
+from sqlalchemy import CheckConstraint, DateTime, ForeignKey, String, Text, func
 from sqlalchemy.orm import Mapped, mapped_column
+
+from app.db.base import Base
 
 
 class Task(Base):

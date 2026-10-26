@@ -1,7 +1,7 @@
-from pydantic import BaseModel, Field, ConfigDict, field_validator, AwareDatetime
-from uuid import UUID
-from datetime import datetime
 from typing import Literal
+from uuid import UUID
+
+from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, field_validator
 
 
 class TaskCreate(BaseModel):

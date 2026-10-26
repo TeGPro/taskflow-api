@@ -1,4 +1,5 @@
 from sqlalchemy import select
+
 from app.db.session import SessionLocal
 from app.models.project import Project
 

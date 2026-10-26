@@ -1,13 +1,15 @@
-from datetime import datetime, UTC
+from datetime import UTC, datetime
+from typing import Literal
 from uuid import UUID
-from sqlalchemy.orm import Session
+
+from sqlalchemy import case, func, select
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import Session
+
 from app.models.project_member import ProjectMember
 from app.models.task import Task
 from app.schemas.task import TaskCreate, TaskUpdate
-from sqlalchemy import select, func, case
 from app.services.projects import get_project
-from typing import Literal
 
 
 def create_task(
@@ -138,11 +140,11 @@ def list_project_tasks(
 
     total = db.scalar(select(func.count()).select_from(stmt.subquery()))
     priority_ranks = {"low": 1, "medium": 2, "high": 3}
-    
+
     sort_fields = {
         "created_at": Task.created_at,
         "due_at": Task.due_at,
-        "priority": case(priority_ranks, value = Task.priority),
+        "priority": case(priority_ranks, value=Task.priority),
     }
 
     sort_column = sort_fields[sort]

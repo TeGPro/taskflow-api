@@ -7,10 +7,10 @@ from app.api.deps import get_db
 from app.schemas.project import ProjectCreate, ProjectRead, ProjectUpdate
 from app.services.projects import (
     create_project,
+    delete_project,
     get_project,
     list_projects,
     update_project,
-    delete_project,
 )
 
 router = APIRouter(prefix="/projects")

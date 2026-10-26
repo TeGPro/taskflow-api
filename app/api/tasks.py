@@ -1,19 +1,18 @@
+from typing import Literal
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, Response, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_db
-from app.schemas.task import TaskCreate, TaskRead, TaskUpdate, PaginatedTasksResponse
+from app.schemas.task import PaginatedTasksResponse, TaskCreate, TaskRead, TaskUpdate
 from app.services.tasks import (
     create_task,
-    get_task,
-    update_task,
     delete_task,
+    get_task,
     list_project_tasks,
+    update_task,
 )
-from typing import Literal
-
 
 router = APIRouter()
 
