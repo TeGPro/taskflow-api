@@ -52,4 +52,6 @@ def authenticate_user(db: Session, data: UserLogin) -> User | None:
 
     if correct_password is False:
         return None
+    if user.is_active is False:
+        return None
     return user

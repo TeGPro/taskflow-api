@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Literal
 from uuid import UUID
 
 from sqlalchemy import CheckConstraint, DateTime, ForeignKey, String, func
@@ -16,7 +17,9 @@ class ProjectMember(Base):
     user_id: Mapped[UUID] = mapped_column(
         ForeignKey("users.id"), primary_key=True, index=True
     )
-    role: Mapped[str] = mapped_column(String(20), nullable=False)
+    role: Mapped[Literal["editor", "viewer"]] = mapped_column(
+        String(20), nullable=False
+    )
     joined_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now()
     )

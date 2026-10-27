@@ -9,12 +9,16 @@ from sqlalchemy.orm import Session
 from app.models.project_member import ProjectMember
 from app.models.task import Task
 from app.schemas.task import TaskCreate, TaskUpdate
+from app.services.permissions import require_project_role
 from app.services.projects import get_project
 
 
 def create_task(
     db: Session, data: TaskCreate, project_id: UUID, user_id: UUID
 ) -> Task | None:
+    role = require_project_role(db, project_id, user_id, ["editor", "owner"])
+    if role is None:
+        return None
     project = get_project(db, project_id, user_id)
     if project is None:
         return None
@@ -71,6 +75,9 @@ def update_task(
     task = get_task(db, task_id, user_id)
     if task is None:
         return None
+    role = require_project_role(db, task.project_id, user_id, ["editor", "owner"])
+    if role is None:
+        return None
     changes = data.model_dump(exclude_unset=True)
     if changes == {}:
         return task
@@ -107,9 +114,14 @@ def update_task(
 
 
 def delete_task(db: Session, task_id: UUID, user_id: UUID) -> bool:
+
     task = get_task(db, task_id, user_id)
     if task is None:
         return False
+    role = require_project_role(db, task.project_id, user_id, ["editor", "owner"])
+    if role is None:
+        return False
+
     try:
         db.delete(task)
         db.commit()
