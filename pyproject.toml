@@ -30,6 +30,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "ruff==0.17.1",
+    "pytest==9.2.0"
 ]
 
 [tool.ruff.lint.flake8-bugbear]
